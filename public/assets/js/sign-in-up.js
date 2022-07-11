@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded' , function() {
   var clients = [];
   var idCounterRef = db.collection("counter").doc("idCounter");
   var idCounter;
-  var isLoginRef = db.collection("counter").doc("isLogin");
-  var isLogin;
+  var isLogin = parseInt(localStorage.getItem("isLogin"));
+  var userLoginId = parseInt(localStorage.getItem("userLoginId"));
 
   function Signup() {
     var phoneNumberInput = document.querySelector('.modal__form .signup-phone-number-input').value;
@@ -83,20 +83,15 @@ document.addEventListener('DOMContentLoaded' , function() {
   var headerUserInfor = document.querySelector('.header__navbar .header__user-infor');
 
   function Logout() {
-    isLoginRef.update({
-      value: false,
-    }).then(function() {
-      document.location.reload();
-    });
+    localStorage.setItem("isLogin" , 0);
+    localStorage.setItem("userLoginId" , 0);
+    document.location.reload();
   }
 
   function GoLogin(id) {
-    isLoginRef.update({
-      value: true,
-      userId: id,
-    }).then(function() {
-      document.location.reload();
-    });
+    localStorage.setItem("isLogin" , 1);
+    localStorage.setItem("userLoginId" , id);
+    document.location.reload();
   }
 
   function displayUserHomePage(username) {
@@ -109,20 +104,18 @@ document.addEventListener('DOMContentLoaded' , function() {
   }
   
   async function main() {
-    var [clientsSnap, idCounterSnap , isLoginSnap] = await Promise.all([
+    var [clientsSnap, idCounterSnap] = await Promise.all([
       clientsRef.get(),
       idCounterRef.get(),
-      isLoginRef.get(),
     ]);
     clients = clientsSnap.docs.map(function(doc) {
       return doc.data();
     });
     idCounter = idCounterSnap.data().value;
-    isLogin = isLoginSnap.data();
 
-    if (isLogin.value === true) {
+    if (isLogin === 1) {
       var user = clients.find(function(client) {
-        return client.id === isLogin.userId;
+        return client.id === userLoginId;
       });
       displayUserHomePage(user.username);
     }
