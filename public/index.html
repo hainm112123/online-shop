@@ -150,6 +150,17 @@
                         </li>
                         <li class="navbar-item separate-item register-btn"><a href="#">Sign up</a></li>
                         <li class="navbar-item login-btn"><a href="#">Login</a></li>
+
+                        <li class="navbar-item header__user-infor">
+                            <img class="navbar-item__user-logo" src="./assets/image/user-logo/userlogo.jpg" alt="user logo">
+                            <span class="navbar-item__username">yuuhi</span>
+                            <ul class="navbar-item__user-menu">
+                                <li class="navbar-item__user-menu-item">My account</li>
+                                <li class="navbar-item__user-menu-item">My address</li>
+                                <li class="navbar-item__user-menu-item">My cart</li>
+                                <li class="navbar-item__user-menu-item navbar-item__user-menu-logout">Log out</li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -1780,20 +1791,23 @@
             
             <div class="modal__form">
                 <div class="modal__form-group">
-                    <input type="text" class="modal__input" placeholder="Phone number">
+                    <input type="text" class="modal__input signup-phone-number-input" placeholder="Phone number">
                 </div>
                 <div class="modal__form-group confirm-code">
                     <input type="text" class="modal__input code-input" placeholder="Verification code">
                     <button class="modal__send-code-btn">Send verification code</button>
                 </div>
                 <div class="modal__form-group">
-                    <input type="text" class="modal__input" placeholder="Password">
+                    <input type="text" class="modal__input signup-username-input" placeholder="Username">
                 </div>
                 <div class="modal__form-group">
-                    <input type="text" class="modal__input" placeholder="Retype Password">
+                    <input type="text" class="modal__input signup-password-input" placeholder="Password">
                 </div>
-                <button class="submit-btn primary-btn">Sign up</button>
-            </div>
+                <div class="modal__form-group">
+                    <input type="text" class="modal__input signup-retype-password-input" placeholder="Retype Password">
+                </div>
+                <button class="submit-btn primary-btn signup-btn">Sign up</button>
+            </div> 
 
             <div class="modal__change-account-type">
                 <div class="horizontal-line"></div>
@@ -1836,12 +1850,12 @@
             
             <div class="modal__form">
                 <div class="modal__form-group">
-                    <input type="text" class="modal__input" placeholder="Email/Phone number/Username">
+                    <input type="text" class="modal__input login-phone-number-input" placeholder="Email/Phone number/Username">
                 </div>
                 <div class="modal__form-group">
-                    <input type="text" class="modal__input" placeholder="Password">
+                    <input type="text" class="modal__input login-password-input" placeholder="Password">
                 </div>
-                <button class="submit-btn primary-btn">Log In</button>
+                <button class="submit-btn primary-btn login-btn">Log In</button>
                 <div class="modal__login-aside">
                     <a href="#">Forgot password ?</a>
                 </div>
@@ -1876,5 +1890,6 @@
     <!-- -----------------------------LOGIN END------------------------------ -->
 
     <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/sign-in-up.js"></script>
 </body>
 </html>
