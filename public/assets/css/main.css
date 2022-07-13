@@ -283,8 +283,8 @@
     font-weight: 700;
 }
 
-.modal__input:focus {
-    outline: 1px solid rgba(0, 0, 0, 0.358);
+.modal__input {
+    outline: none;
 }
 
 .modal__form-validate {
