@@ -1790,22 +1790,43 @@
             </div>
             
             <div class="modal__form">
-                <div class="modal__form-group">
-                    <input type="text" class="modal__input signup-phone-number-input" placeholder="Phone number">
+                <div class="modal__form-wrap">
+                    <div class="modal__form-group">
+                        <input type="text" class="modal__input signup-phone-number-input" placeholder="Phone number">
+                    </div>
+                    <p class="modal__form-validate singup-phone-number-validate">Phone number must has 10 digit</p>
                 </div>
-                <div class="modal__form-group confirm-code">
-                    <input type="text" class="modal__input code-input" placeholder="Verification code">
-                    <button class="modal__send-code-btn">Send verification code</button>
+                
+                <div class="modal__form-wrap">
+                    <div class="modal__form-group confirm-code">
+                        <input type="text" class="modal__input code-input" placeholder="Verification code">
+                        <button class="modal__send-code-btn">Send verification code</button>
+                    </div>
+                    <p class="modal__form-validate signup-code-validate">Verification code must has 6 characters</p>
                 </div>
-                <div class="modal__form-group">
-                    <input type="text" class="modal__input signup-username-input" placeholder="Username">
+
+                <div class="modal__form-wrap">
+                    <div class="modal__form-group">
+                        <input type="text" class="modal__input signup-username-input" placeholder="Username">
+                    </div>
+                    <p class="modal__form-validate signup-username-validate--length">Username must has at least 4 characters</p>
+                    <p class="modal__form-validate signup-username-validate--existed">This username is already exist</p>
                 </div>
-                <div class="modal__form-group">
-                    <input type="text" class="modal__input signup-password-input" placeholder="Password">
+                
+                <div class="modal__form-wrap">
+                    <div class="modal__form-group">
+                        <input type="password" class="modal__input signup-password-input" placeholder="Password">
+                    </div>
+                    <p class="modal__form-validate signup-password-validate">Password must has at least 6 characters</p>
                 </div>
-                <div class="modal__form-group">
-                    <input type="text" class="modal__input signup-retype-password-input" placeholder="Retype Password">
+                
+                <div class="modal__form-wrap">
+                    <div class="modal__form-group">
+                        <input type="password" class="modal__input signup-retype-password-input" placeholder="Retype Password">
+                    </div>
+                    <p class="modal__form-validate signup-retype-password-validate">Password doesn't match</p>
                 </div>
+
                 <button class="submit-btn primary-btn signup-btn">Sign up</button>
             </div> 
 
@@ -1849,12 +1870,17 @@
             </div>
             
             <div class="modal__form">
-                <div class="modal__form-group">
-                    <input type="text" class="modal__input login-phone-number-input" placeholder="Email/Phone number/Username">
+                <div class="modal__form-wrap">
+                    <div class="modal__form-group">
+                        <input type="text" class="modal__input login-phone-number-input" placeholder="Email/Phone number/Username">
+                    </div>
                 </div>
-                <div class="modal__form-group">
-                    <input type="text" class="modal__input login-password-input" placeholder="Password">
+                <div class="modal__form-wrap">
+                    <div class="modal__form-group">
+                        <input type="password" class="modal__input login-password-input" placeholder="Password">
+                    </div>
                 </div>
+                <p class="modal__form-validate login-password-validate">Wrong username or password</p>
                 <button class="submit-btn primary-btn login-btn">Log In</button>
                 <div class="modal__login-aside">
                     <a href="#">Forgot password ?</a>

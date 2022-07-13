@@ -283,6 +283,19 @@
     font-weight: 700;
 }
 
+.modal__input:focus {
+    outline: 1px solid rgba(0, 0, 0, 0.358);
+}
+
+.modal__form-validate {
+    font-size: 12px;
+    padding-left: 12px;
+    margin-top: -4px;
+    margin-bottom: 12px;
+    color: #f02849;
+    display: none;
+}
+
 /* ----------regiser------------ */
 .modal {
     position: fixed;

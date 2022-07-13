@@ -8,39 +8,72 @@ document.addEventListener('DOMContentLoaded' , function() {
   var isLogin = parseInt(localStorage.getItem("isLogin"));
   var userLoginId = parseInt(localStorage.getItem("userLoginId"));
 
-  function Signup() {
-    var phoneNumberInput = document.querySelector('.modal__form .signup-phone-number-input').value;
-    var passwordInput = document.querySelector('.modal__form .signup-password-input').value;
-    var retypePasswordInput = document.querySelector('.modal__form .signup-retype-password-input').value;
-    var usernameInput = document.querySelector('.modal__form .signup-username-input').value;
+  var signupOject = function(input, validator, rule) {
+    this.input = input;
+    this.validator = validator;
+    this.rule = rule;
+  }
 
-    if (phoneNumberInput.length !== 10) {
-      alert('invailid phonenumber');
-      return;
+  var signupElements = [
+    new signupOject(document.querySelector('.modal__form .signup-phone-number-input'), document.querySelector('.singup-phone-number-validate'), 
+      function (passowrd) {
+        return passowrd.value.length === 10;
+      },
+    ),
+
+    new signupOject(document.querySelector('.modal__form .code-input'), document.querySelector('.signup-code-validate'), 
+      function (code) {
+        return code.value.length === 6;
+      },
+    ),
+
+    new signupOject(document.querySelector('.modal__form .signup-username-input'), document.querySelector('.signup-username-validate--length'), 
+      function (username) {
+        return username.value.length >= 4;
+      },
+    ),
+
+    new signupOject(document.querySelector('.modal__form .signup-username-input'), document.querySelector('.signup-username-validate--existed'), 
+      function (username) {
+        if (clients.find(function(client) {
+          return client.username === username.value;
+        })) {
+          return false;
+        }
+        return true;
+      },
+    ),
+
+    new signupOject(document.querySelector('.modal__form .signup-password-input'), document.querySelector('.signup-password-validate'), 
+      function (password) {
+        return password.value.length >= 6;
+      },
+    ),
+
+    new signupOject(document.querySelector('.modal__form .signup-retype-password-input'), document.querySelector('.signup-retype-password-validate'), 
+      function (retypePassword) {
+        return retypePassword.value === signupElements[4].input.value;
+      }
+    ),
+  ]; 
+  const validatorColor = '#f02849';
+
+  function Signup() {
+    var ok = true;
+    for (var element of signupElements) {
+      if (!element.rule(element.input)) {
+        element.input.style.outline = '1px solid ' + validatorColor;
+        element.validator.style.display = 'block';
+        ok = false;
+      }
     }
-    if (passwordInput.length < 4) {
-      alert('password too short!');
-      return;
-    }
-    if (retypePasswordInput !== passwordInput) {
-      alert("retyped password don't match!");
-      return ;
-    }
-    if (usernameInput.length < 4) {
-      alert('username must be at least 4 character');
-      return;
-    }
-    if (clients.find(function(client) {
-      return client.username === usernameInput;
-    })) {
-      alert('this username already exists!');
-      return;
-    }
+
+    if (ok === false) return;
 
     clientsRef.add({
-      username: usernameInput,
-      phoneNumbe: phoneNumberInput,
-      password: passwordInput,
+      username: signupElements[2].input.value,
+      phoneNumbe: signupElements[0].input.value,
+      password: signupElements[4].input.value,
       id: idCounter + 1,
     }).then(function() {
       alert('Register complete!');
@@ -57,20 +90,15 @@ document.addEventListener('DOMContentLoaded' , function() {
     });
   }
 
+  var loginUsernameInput = document.querySelector('.login-phone-number-input');
+  var loginPasswordInput = document.querySelector('.login-password-input');
+  var loginValidator = document.querySelector('.login-password-validate');
   function Login() {
-    var phoneNumberInput = document.querySelector('.modal__form .login-phone-number-input').value; //username
-    var passwordInput = document.querySelector('.modal__form .login-password-input').value;
-
-    if (passwordInput.length < 4) {
-      alert('wrong password!');
-      return;
-    }
-
     var account = clients.find(function(client) {
-      return client.username === phoneNumberInput;
+      return client.username === loginUsernameInput.value;
     });
-    if (!account || account.password !== passwordInput) {
-      alert('wrong username/password');
+    if (!account || account.password !== loginPasswordInput.value) {
+      loginValidator.style.display = 'block';
       return; 
     }
 
@@ -81,19 +109,16 @@ document.addEventListener('DOMContentLoaded' , function() {
   var headerSinupBtn = document.querySelector('.header__navbar .register-btn');
   var headerLoginBtn = document.querySelector('.header__navbar .login-btn');
   var headerUserInfor = document.querySelector('.header__navbar .header__user-infor');
-
   function Logout() {
     localStorage.setItem("isLogin" , 0);
     localStorage.setItem("userLoginId" , 0);
     document.location.reload();
   }
-
   function GoLogin(id) {
     localStorage.setItem("isLogin" , 1);
     localStorage.setItem("userLoginId" , id);
     document.location.reload();
   }
-
   function displayUserHomePage(username) {
     // document.location.reload();
     headerLoginBtn.style.display = 'none';
@@ -126,6 +151,33 @@ document.addEventListener('DOMContentLoaded' , function() {
     loginBtn.addEventListener('click', Login);
     signupBtn.addEventListener('click', Signup);
     logoutBtn.addEventListener('click', Logout);
+
+    signupElements.forEach(function(element) {
+      element.input.addEventListener('blur', function() {
+        if (element.input.value && !element.rule(element.input)) {
+          element.input.style.outline = '1px solid ' + validatorColor;
+          element.validator.style.display = 'block';
+          // console.log(element.validator);
+        }
+      });
+      element.input.addEventListener('input' , function() {
+        element.input.style.outline = 'none';
+        // element.input.focus().style.outline = '1px solid rgba(0, 0, 0, 0.358)';
+        element.validator.style.display = 'none';
+        // console.log(element.validator);
+      });
+    });
+    signupElements[4].input.addEventListener('input' , function() {
+      signupElements[5].input.style.outline = 'none';
+      signupElements[5].validator.style.display = 'none';
+    });
+
+    loginUsernameInput.addEventListener('input', function() {
+      loginValidator.style.display = 'none';
+    });
+    loginPasswordInput.addEventListener('input', function() {
+      loginValidator.style.display = 'none';
+    });
   }
 
   main();
