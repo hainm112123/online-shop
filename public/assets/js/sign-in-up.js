@@ -99,6 +99,8 @@ document.addEventListener('DOMContentLoaded' , function() {
     });
     if (!account || account.password !== loginPasswordInput.value) {
       loginValidator.style.display = 'block';
+      loginUsernameInput.style.outline = '1px solid ' + validatorColor;
+      loginPasswordInput.style.outline = '1px solid ' + validatorColor;
       return; 
     }
 
@@ -162,9 +164,7 @@ document.addEventListener('DOMContentLoaded' , function() {
       });
       element.input.addEventListener('input' , function() {
         element.input.style.outline = 'none';
-        // element.input.focus().style.outline = '1px solid rgba(0, 0, 0, 0.358)';
         element.validator.style.display = 'none';
-        // console.log(element.validator);
       });
     });
     signupElements[4].input.addEventListener('input' , function() {
@@ -174,9 +174,13 @@ document.addEventListener('DOMContentLoaded' , function() {
 
     loginUsernameInput.addEventListener('input', function() {
       loginValidator.style.display = 'none';
+      loginUsernameInput.style.outline = 'none';
+      loginPasswordInput.style.outline = 'none';
     });
     loginPasswordInput.addEventListener('input', function() {
       loginValidator.style.display = 'none';
+      loginUsernameInput.style.outline = 'none';
+      loginPasswordInput.style.outline = 'none';
     });
   }
 
